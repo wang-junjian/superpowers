@@ -177,10 +177,6 @@ Skills update automatically when you update the plugin:
 /plugin update superpowers
 ```
 
-## License
-
-MIT License - see LICENSE file for details
-
 ## Community
 
 Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of the folks at [Prime Radiant](https://primeradiant.com).
@@ -188,3 +184,126 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 - **Discord**: [Join us](https://discord.gg/35wsABTejz) for community support, questions, and sharing what you're building with Superpowers
 - **Issues**: https://github.com/obra/superpowers/issues
 - **Release announcements**: [Sign up](https://primeradiant.com/superpowers/) to get notified about new versions
+
+## Web Interface
+
+Superpowers includes a web interface for exploring and learning about the skills. The web app is built with Next.js 15, TypeScript, and Tailwind CSS.
+
+### Features
+
+- Complete bilingual support (English / 中文)
+- Interactive story mode demonstrating the complete Superpowers workflow
+- Skills library with detailed documentation
+- Responsive design for all devices
+
+### Getting Started
+
+#### Prerequisites
+
+- Node.js 18+ and npm
+
+#### Installation
+
+```bash
+cd web
+npm install
+```
+
+#### Development
+
+```bash
+cd web
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+#### Building for Production
+
+```bash
+cd web
+npm run build
+```
+
+#### Running Production Build
+
+```bash
+cd web
+npm start
+```
+
+### Project Structure
+
+```
+web/
+├── app/                    # Next.js App Router pages
+│   ├── layout.tsx         # Root layout
+│   ├── page.tsx           # Home page
+│   ├── skills/            # Skills pages
+│   └── story/             # Story mode pages
+├── components/            # React components
+├── lib/                   # Utility functions and types
+│   ├── types.ts           # TypeScript interfaces
+│   ├── i18n/              # Internationalization
+│   ├── story.ts           # Story content
+│   └── skill-i18n.ts     # Skill translation helpers
+├── scripts/               # Build scripts
+│   └── load-skills.mjs    # Load skills from skills/ directory
+├── public/                # Static assets
+│   └── skills-data.json   # Generated skills data
+└── package.json
+```
+
+### Skill Data Loading
+
+The web app loads skills from the `skills/` directory at build time. The `load-skills.mjs` script:
+
+1. Reads all `SKILL.md` and `SKILL-zh.md` files from the skills directory
+2. Parses YAML frontmatter
+3. Generates `public/skills-data.json` with bilingual support
+
+To regenerate skills data manually:
+
+```bash
+cd web
+npm run prebuild
+```
+
+### i18n
+
+The web app supports English and Chinese:
+
+- Language switcher in the header
+- Skills: `SKILL.md` (English) + `SKILL-zh.md` (Chinese)
+- UI translations in `lib/i18n/translations.ts`
+- Story translations in `lib/story.ts`
+
+### Customization
+
+#### Adding a New Skill Translation
+
+Create a `SKILL-zh.md` file in the skill's directory:
+
+```markdown
+---
+name: skill-name
+description: 中文描述
+---
+
+中文内容...
+```
+
+Then rebuild the skills data:
+
+```bash
+cd web
+npm run prebuild
+```
+
+#### Modifying the UI
+
+The web app uses Tailwind CSS for styling. Modify components in `components/` or pages in `app/` as needed.
+
+## License
+
+MIT License - see LICENSE file for details
